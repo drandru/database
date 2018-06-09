@@ -2,11 +2,7 @@
 
 namespace  DRD\DatabaseBundle\Repository;
 
-use Doctrine\Common\Persistence\ObjectRepository;
-use Doctrine\DBAL\Query\QueryBuilder;
-use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query;
-use DRD\DatabaseBundle\Entity\EntityInterface;
 
 class TotalCountRepository extends Repository implements TotalCountRepositoryInterface
 {
