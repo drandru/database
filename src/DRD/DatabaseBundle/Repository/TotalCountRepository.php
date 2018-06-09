@@ -8,7 +8,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query;
 use DRD\DatabaseBundle\Entity\EntityInterface;
 
-class TotalCountRepository extends Repository
+class TotalCountRepository extends Repository implements TotalCountRepositoryInterface
 {
     /**
      * @param string $builderName

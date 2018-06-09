@@ -5,7 +5,7 @@ namespace  DRD\DatabaseBundle\Repository;
 use Doctrine\Common\Persistence\ObjectRepository;
 use DRD\DatabaseBundle\Entity\EntityInterface;
 
-interface RepositoryInterface
+interface TotalCountRepositoryInterface
 {
     /**
      * @param string $builderName
