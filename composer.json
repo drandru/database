@@ -1,0 +1,30 @@
+{
+    "name": "drandru/database",
+    "type": "symfony-bundle",
+    "autoload": {
+      "psr-4": { "": "src/" }
+    },
+    "require": {
+      "php": ">=7.1",
+      "doctrine/doctrine-bundle": "^1.6",
+      "doctrine/orm": "^2.5",
+      "guzzlehttp/guzzle": "^6.3",
+      "sensio/distribution-bundle": "^5.0.19",
+      "sensio/framework-extra-bundle": "^3.0.2",
+      "symfony/monolog-bundle": "^3.1.0",
+      "symfony/polyfill-apcu": "^1.0",
+      "symfony/swiftmailer-bundle": "^2.3.10",
+      "symfony/symfony": "3.3.*",
+      "drandru/general": "^0.0.1"
+    },
+    "require-dev": {
+        "sensio/generator-bundle": "^3.0",
+        "symfony/phpunit-bridge": "^3.0"
+    },
+    "repositories": [
+      {
+        "type": "vcs",
+        "url": "git@github.com:drandru/general.git"
+      }
+    ]
+}
