@@ -3,6 +3,7 @@
 namespace  DRD\DatabaseBundle\Repository;
 
 use Doctrine\Common\Persistence\ObjectRepository;
+use Doctrine\DBAL\Query\QueryBuilder;
 use Doctrine\ORM\EntityManagerInterface;
 use Doctrine\ORM\Query;
 use DRD\DatabaseBundle\Entity\EntityInterface;
@@ -104,31 +105,11 @@ class Repository implements RepositoryInterface
      * @param array $sort
      * @return SimpleListInterface
      */
-    public function findList($builderName, $fields, $perPage, $offset, array $where = null, array $sort = [])
+    public function findList($builderName, $fields, int $perPage, int $offset, array $where = null, array $sort = [])
     {
-        $qb = $this->getEntityManager()->createQueryBuilder($builderName);
-        /** @var Query $qb */
+        $query = $this->getFilledQuery($builderName, $perPage, $offset, (array) $where);
 
-        $query =
-            $qb
-                ->setMaxResults($perPage)
-                ->setFirstResult($offset)
-                ;
-
-        if ($where) {
-            foreach ($where as $key => $values) {
-                $query->where($key);
-                foreach ($values as $valueKey => $value) {
-                    $query->setParameter($valueKey, $value);
-                }
-            }
-        }
-
-        if ($sort) {
-            foreach ($sort as $field) {
-                $query->orderBy($field[0], $field[1]);
-            }
-        }
+        $query = $this->addSort($query, $sort);
 
         $result = (array) $query->select($fields)->getQuery()->getResult(Query::HYDRATE_ARRAY);
 
@@ -146,31 +127,11 @@ class Repository implements RepositoryInterface
      * @param array $sort
      * @return SimpleList
      */
-    public function findObjectList($builderName, $fields, $perPage, $offset, array $where = null, array $sort = [])
+    public function findObjectList($builderName, $fields, int $perPage, int $offset, array $where = null, array $sort = [])
     {
-        $qb = $this->getEntityManager()->createQueryBuilder($builderName);
-        /** @var Query $qb */
+        $query = $this->getFilledQuery($builderName, $perPage, $offset, (array) $where);
 
-        $query =
-            $qb
-                ->setMaxResults($perPage)
-                ->setFirstResult($offset)
-                ;
-
-        if ($where) {
-            foreach ($where as $key => $values) {
-                $query->where($key);
-                foreach ($values as $valueKey => $value) {
-                    $query->setParameter($valueKey, $value);
-                }
-            }
-        }
-
-        if ($sort) {
-            foreach ($sort as $field) {
-                $query->orderBy($field[0], $field[1]);
-            }
-        }
+        $query = $this->addSort($query, $sort);
 
         $result = $query->select($fields)->getQuery()->getResult();
 
@@ -178,7 +139,7 @@ class Repository implements RepositoryInterface
     }
 
     /**
-     * @return ObjectRepository
+     * @return EntityManagerInterface
      */
     private function getEntityManager():ObjectRepository
     {
@@ -189,7 +150,7 @@ class Repository implements RepositoryInterface
      * @param array $result
      * @return array
      */
-    private function combineResult(array $result)
+    protected function combineResult(array $result)
     {
         $newResult = [];
         foreach ($result as $item) {
@@ -206,5 +167,50 @@ class Repository implements RepositoryInterface
         }
 
         return $newResult;
+    }
+
+    /**
+     * @param string $builderName
+     * @param int $perPage
+     * @param int $offset
+     * @param array $where
+     * @return QueryBuilder
+     */
+    protected function getFilledQuery(string $builderName, int $perPage, int $offset, array $where): QueryBuilder
+    {
+        /** @var QueryBuilder $query */
+        $query = $this->getEntityManager()->createQueryBuilder($builderName);
+
+        $query
+            ->setMaxResults($perPage)
+            ->setFirstResult($offset)
+        ;
+
+        if ($where) {
+            foreach ($where as $key => $values) {
+                $query->where($key);
+                foreach ($values as $valueKey => $value) {
+                    $query->setParameter($valueKey, $value);
+                }
+            }
+        }
+
+        return $query;
+    }
+
+    /**
+     * @param QueryBuilder $query
+     * @param array $sort
+     * @return QueryBuilder
+     */
+    protected function addSort(QueryBuilder $query, array $sort): QueryBuilder
+    {
+        if ($sort) {
+            foreach ($sort as $field) {
+                $query->orderBy($field[0], $field[1]);
+            }
+        }
+
+        return $query;
     }
 }

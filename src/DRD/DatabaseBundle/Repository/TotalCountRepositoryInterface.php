@@ -8,48 +8,13 @@ use DRD\DatabaseBundle\Entity\EntityInterface;
 interface RepositoryInterface
 {
     /**
-     * @param $id
-     * @return EntityInterface
-     */
-    public function findById($id);
-
-    /**
-     * @param EntityInterface $entity
-     * @return int
-     */
-    public function save(EntityInterface $entity);
-
-    /**
-     * @param EntityInterface $entity
-     * @return int
-     */
-    public function saveImmediately(EntityInterface $entity);
-
-    /**
-     * @param EntityInterface $entity
-     * @return int
-     */
-    public function delete(EntityInterface $entity);
-
-    /**
-     * @param EntityInterface $entity
-     * @return int
-     */
-    public function deleteImmediately(EntityInterface $entity);
-
-    /**
-     * @return ObjectRepository
-     */
-    public function getRepository();
-
-    /**
      * @param string $builderName
      * @param string|array $fields
      * @param int $perPage
      * @param int $offset
      * @param array $where
      * @param array $sort
-     * @return SimpleListInterface
+     * @return TotalCountListInterface
      */
     public function findList($builderName, $fields, int $perPage, int $offset, array $where = [], array $sort = []);
 
@@ -60,7 +25,7 @@ interface RepositoryInterface
      * @param int $offset
      * @param array|null $where
      * @param array $sort
-     * @return SimpleListInterface
+     * @return TotalCountListInterface
      */
     public function findObjectList($builderName, $fields, int $perPage, int $offset, array $where = [], array $sort = []);
 }
