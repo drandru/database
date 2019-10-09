@@ -1,26 +1,26 @@
 {
-    "name": "drandru/database",
-    "type": "symfony-bundle",
-    "autoload": {
-      "psr-4": { "": "src/" }
-    },
-    "require": {
-      "php": ">=7.1",
-      "sensio/framework-extra-bundle": "^5.1",
-      "symfony/monolog-bundle": "^3.1",
-      "symfony/framework-bundle": "^4.1",
-      "symfony/orm-pack": "^1.0",
-      "drandru/general": "^4"
-    },
-    "require-dev": {
-        "sensio/generator-bundle": "^3.0",
-        "symfony/phpunit-bridge": "^3.0",
-        "symfony/maker-bundle": "^1.5"
-    },
-    "repositories": [
-      {
-        "type": "vcs",
-        "url": "git@github.com:drandru/general.git"
-      }
-    ]
+  "name": "drandru/database",
+  "type": "library",
+  "description": "database library for symfony projects",
+  "autoload": {
+    "psr-4": {
+      "DRD\\DatabaseBundle\\": "src/DRD/DatabaseBundle"
+    }
+  },
+  "require": {
+    "php": ">=7.0",
+    "symfony/framework-bundle": "4.3.*",
+    "symfony/orm-pack": "^1.0",
+    "drandru/general": "4.3.*"
+  },
+  "require-dev": {
+    "sensio/generator-bundle": "^3.0",
+    "symfony/phpunit-bridge": "^3.0"
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "git@github.com:drandru/general.git"
+    }
+  ]
 }
